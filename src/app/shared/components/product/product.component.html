@@ -1,0 +1,46 @@
+<div class="card mb-4" *ngFor="let mobileObj of productArr" 
+    [ngClass]="{
+        'cardNotAvl' : !mobileObj.isAvailable
+    }"
+>
+    <div class="card-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-5 imgContainer">
+                    <img 
+                        *ngIf="mobileObj.image; else noImageTemplate"
+                        [src]="mobileObj.image"
+                        [alt]="mobileObj.name"
+                        [title]="mobileObj.name"
+                        class="img-fluid"
+                    >
+                    <ng-template #noImageTemplate>
+                        <img
+                            src="https://placehold.co/600x400"
+                            class="img-fluid"
+                        >
+                    </ng-template>
+                </div>
+                <div class="col-7">
+                    <h3>{{mobileObj.name}} 
+                        <span class="rating"
+                            [ngClass]="{
+                                'bg-success': mobileObj.rating >=4,
+                                'bg-warning': mobileObj.rating >= 3 && mobileObj.rating < 4,
+                                'bg-danger' : mobileObj.rating < 3
+                            }"
+                        >{{mobileObj.rating}}</span>
+                    </h3>
+                    <h4>Price: Rs. {{mobileObj.price}}</h4>
+                    <span><b>Specifications:</b></span>
+                    <ul>
+                        <li *ngFor="let specs of mobileObj.specifications">{{specs}}</li>
+                    </ul>
+                    <p class="productNotAvl d-flex justify-content-center" *ngIf="!mobileObj.isAvailable">
+                        Product is not available
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
